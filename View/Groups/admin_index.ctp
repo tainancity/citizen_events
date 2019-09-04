@@ -11,7 +11,7 @@
     <p>
         <?php
         echo $this->Paginator->counter(array(
-            'format' => '第 {:page} 頁 / 共 {:pages} 頁')
+            'format' => '第 {:page} 頁 / 共 {:pages} 頁'
         ));
         ?>
     </p>

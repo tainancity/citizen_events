@@ -11,7 +11,7 @@ if (!isset($url)) {
     </div>
     <div><?php
         echo $this->Paginator->counter(array(
-            'format' => '第 {:page} 頁 / 共 {:pages} 頁')
+            'format' => '第 {:page} 頁 / 共 {:pages} 頁'
         ));
         ?></div>
     <div class="paging"><?php echo $this->element('paginator'); ?></div>
