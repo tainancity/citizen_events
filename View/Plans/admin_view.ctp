@@ -45,7 +45,7 @@
     </div>
     <hr />
     <div class="btn-group">
-        <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Plan.id')), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
+        <?php echo $this->Html->link('刪除', array('action' => 'delete', $this->Form->value('Plan.id')), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
         <?php echo $this->Html->link(__('計畫 List', true), array('action' => 'index'), array('class' => 'btn btn-default')); ?>
         <?php echo $this->Html->link(__('View Related 活動', true), array('controller' => 'events', 'action' => 'index', 'Plan', $this->data['Plan']['id']), array('class' => 'btn btn-default PlansAdminViewControl')); ?>
     </div>

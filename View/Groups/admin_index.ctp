@@ -11,7 +11,7 @@
     <p>
         <?php
         echo $this->Paginator->counter(array(
-            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+            'format' => '第 {:page} 頁 / 共 {:pages} 頁')
         ));
         ?>
     </p>
@@ -39,8 +39,8 @@
             </td>
             <td>
                 <div class="btn-group">
-                        <?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $group['Group']['id']), array('class' => 'btn btn-default dialogControl')); ?>
-                        <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $group['Group']['id']), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
+                        <?php echo $this->Html->link('編輯', array('action' => 'edit', $group['Group']['id']), array('class' => 'btn btn-default dialogControl')); ?>
+                        <?php echo $this->Html->link('刪除', array('action' => 'delete', $group['Group']['id']), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
                         <?php echo $this->Html->link(__('Sub group', true), array('action' => 'index', $group['Group']['id']), array('class' => 'btn btn-default')); ?>
                         <?php
                         if ($group['Group']['id'] != 1) {

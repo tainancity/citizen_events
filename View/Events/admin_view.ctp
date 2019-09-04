@@ -65,7 +65,7 @@ if (empty($this->data['Plan']['id'])) {
     </div>
     <hr />
     <div class="btn-group">
-        <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Event.id')), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
+        <?php echo $this->Html->link('刪除', array('action' => 'delete', $this->Form->value('Event.id')), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
         <?php echo $this->Html->link(__('活動 List', true), array('action' => 'index'), array('class' => 'btn btn-default')); ?>
         <?php echo $this->Html->link(__('View Related 公民', true), array('controller' => 'citizens', 'action' => 'index', 'Event', $this->data['Event']['id']), array('class' => 'btn btn-default EventsAdminViewControl')); ?>
         <?php echo $this->Html->link(__('View Related 講師', true), array('controller' => 'speakers', 'action' => 'index', 'Event', $this->data['Event']['id']), array('class' => 'btn btn-default EventsAdminViewControl')); ?>

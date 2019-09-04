@@ -103,7 +103,7 @@ class MembersController extends AppController {
 
     public function admin_view($id = null) {
         if (!$id) {
-            $this->Session->setFlash(__('Please do following links in the page', true));
+            $this->Session->setFlash('請依照網頁指示操作');
             $this->redirect(array('action' => 'index'));
         }
         $this->set('member', $this->Member->read(null, $id));
@@ -114,10 +114,10 @@ class MembersController extends AppController {
             $this->Member->create();
             if ($this->Member->save($this->request->data)) {
                 $this->Acl->Aro->saveField('alias', 'Member/' . $this->Member->getInsertID());
-                $this->Session->setFlash(__('The data has been saved', true));
+                $this->Session->setFlash('資料已經儲存');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('Something was wrong during saving, please try again', true));
+                $this->Session->setFlash('資料儲存時發生錯誤');
             }
         }
         $this->set('groups', $this->Member->Group->find('list'));
@@ -125,7 +125,7 @@ class MembersController extends AppController {
 
     public function admin_edit($id = null) {
         if (!$id && empty($this->request->data)) {
-            $this->Session->setFlash(__('Please do following links in the page', true));
+            $this->Session->setFlash('請依照網頁指示操作');
             $this->redirect(array('action' => 'index'));
         }
         if (!empty($this->request->data)) {
@@ -138,10 +138,10 @@ class MembersController extends AppController {
                     $aro->id = $member['Aro']['id'];
                     $aro->save(array('parent_id' => $group['Aro']['id']));
                 }
-                $this->Session->setFlash(__('The data has been saved', true));
+                $this->Session->setFlash('資料已經儲存');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('Something was wrong during saving, please try again', true));
+                $this->Session->setFlash('資料儲存時發生錯誤');
             }
         }
         if (empty($this->request->data)) {
@@ -152,11 +152,11 @@ class MembersController extends AppController {
 
     public function admin_delete($id = null) {
         if (!$id) {
-            $this->Session->setFlash(__('Please do following links in the page', true));
+            $this->Session->setFlash('請依照網頁指示操作');
             $this->redirect(array('action' => 'index'));
         }
         if ($this->Member->delete($id)) {
-            $this->Session->setFlash(__('The data has been deleted', true));
+            $this->Session->setFlash('資料已經刪除');
             $this->redirect(array('action' => 'index'));
         }
     }

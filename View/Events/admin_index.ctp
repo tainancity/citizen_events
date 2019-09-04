@@ -11,11 +11,11 @@ if (!empty($foreignId) && !empty($foreignModel)) {
 <div id="EventsAdminIndex">
     <h2><?php echo __('活動', true); ?></h2>
     <div class="btn-group">
-        <?php echo $this->Html->link(__('Add', true), array_merge($url, array('action' => 'add')), array('class' => 'btn btn-default dialogControl')); ?>
+        <?php echo $this->Html->link('新增', array_merge($url, array('action' => 'add')), array('class' => 'btn btn-default dialogControl')); ?>
     </div>
     <div><?php
         echo $this->Paginator->counter(array(
-            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+            'format' => '第 {:page} 頁 / 共 {:pages} 頁')
         ));
         ?></div>
     <div class="paging"><?php echo $this->element('paginator'); ?></div>
@@ -32,7 +32,7 @@ if (!empty($foreignId) && !empty($foreignModel)) {
                 <th><?php echo $this->Paginator->sort('Event.date_end', '活動期程（訖）', array('url' => $url)); ?></th>
                 <th><?php echo $this->Paginator->sort('Event.place', '辦理地點', array('url' => $url)); ?></th>
                 <th><?php echo $this->Paginator->sort('Event.note', '備註', array('url' => $url)); ?></th>
-                <th class="actions"><?php echo __('Action', true); ?></th>
+                <th class="actions">操作</th>
             </tr>
         </thead>
         <tbody>
@@ -79,9 +79,9 @@ if (!empty($foreignId) && !empty($foreignModel)) {
                     ?></td>
                 <td>
                     <div class="btn-group">
-                                <?php echo $this->Html->link(__('View', true), array('action' => 'view', $item['Event']['id']), array('class' => 'btn btn-default dialogControl')); ?>
-                                <?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $item['Event']['id']), array('class' => 'btn btn-default dialogControl')); ?>
-                                <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $item['Event']['id']), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
+                                <?php echo $this->Html->link('檢視', array('action' => 'view', $item['Event']['id']), array('class' => 'btn btn-default dialogControl')); ?>
+                                <?php echo $this->Html->link('編輯', array('action' => 'edit', $item['Event']['id']), array('class' => 'btn btn-default dialogControl')); ?>
+                                <?php echo $this->Html->link('刪除', array('action' => 'delete', $item['Event']['id']), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
                     </div>
                 </td>
             </tr>

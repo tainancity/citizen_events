@@ -57,7 +57,7 @@ if (empty($this->data['Event']['id'])) {
     </div>
     <hr />
     <div class="btn-group">
-        <?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Speaker.id')), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
+        <?php echo $this->Html->link('刪除', array('action' => 'delete', $this->Form->value('Speaker.id')), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
         <?php echo $this->Html->link(__('講師 List', true), array('action' => 'index'), array('class' => 'btn btn-default')); ?>
     </div>
     <div id="SpeakersAdminViewPanel"></div>
