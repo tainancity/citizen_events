@@ -22,6 +22,7 @@ class AppController extends Controller {
                     'userModel' => 'Member',
                 )
             );
+            Configure::write('loginMember', $this->Session->read('Auth.User'));
         }
     }
 
