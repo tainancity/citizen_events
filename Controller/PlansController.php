@@ -12,7 +12,25 @@ class PlansController extends AppController {
         $this->paginate['Plan'] = array(
             'limit' => 20,
         );
-        $this->set('items', $this->paginate($this->Plan));
+        $items = $this->paginate($this->Plan);
+        foreach($items AS $k => $v) {
+            $items[$k]['Plan']['count_events'] = $this->Plan->Event->find('count', array(
+                'conditions' => array(
+                    'Event.Plan_id' => $v['Plan']['id']
+                ),
+            ));
+            $items[$k]['Plan']['count_citizen'] = $this->Plan->Citizen->find('count', array(
+                'conditions' => array(
+                    'Citizen.Plan_id' => $v['Plan']['id']
+                ),
+            ));
+            $items[$k]['Plan']['count_speaker'] = $this->Plan->Speaker->find('count', array(
+                'conditions' => array(
+                    'Speaker.Plan_id' => $v['Plan']['id']
+                ),
+            ));
+        }
+        $this->set('items', $items);
     }
 
     function admin_add() {

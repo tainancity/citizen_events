@@ -13,10 +13,16 @@ class Plan extends AppModel {
             'dependent' => false,
             'className' => 'Event',
         ),
+        'Citizen' => array(
+            'foreignKey' => 'Event_id',
+            'dependent' => false,
+            'className' => 'Citizen',
+        ),
+        'Speaker' => array(
+            'foreignKey' => 'Event_id',
+            'dependent' => false,
+            'className' => 'Speaker',
+        ),
     );
-
-    function afterSave($created, $options = array()) {
-        
-    }
 
 }

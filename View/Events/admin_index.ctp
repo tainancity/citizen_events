@@ -81,7 +81,7 @@ if (!empty($foreignId) && !empty($foreignModel)) {
                     <div class="btn-group">
                                 <?php echo $this->Html->link('檢視', array('action' => 'view', $item['Event']['id']), array('class' => 'btn btn-default dialogControl')); ?>
                                 <?php echo $this->Html->link('編輯', array('action' => 'edit', $item['Event']['id']), array('class' => 'btn btn-default dialogControl')); ?>
-                                <?php echo $this->Html->link('刪除', array('action' => 'delete', $item['Event']['id']), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
+                                <?php echo $this->Html->link('刪除', array('action' => 'delete', $item['Event']['id']), array('class' => 'btn btn-default'), '確定要刪除？'); ?>
                     </div>
                 </td>
             </tr>

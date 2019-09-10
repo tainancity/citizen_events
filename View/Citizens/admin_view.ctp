@@ -57,7 +57,7 @@ if (empty($this->data['Event']['id'])) {
     </div>
     <hr />
     <div class="btn-group">
-        <?php echo $this->Html->link('刪除', array('action' => 'delete', $this->Form->value('Citizen.id')), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
+        <?php echo $this->Html->link('刪除', array('action' => 'delete', $this->Form->value('Citizen.id')), array('class' => 'btn btn-default'), '確定要刪除？'); ?>
         <?php echo $this->Html->link(__('公民 List', true), array('action' => 'index'), array('class' => 'btn btn-default')); ?>
     </div>
     <div id="CitizensAdminViewPanel"></div>

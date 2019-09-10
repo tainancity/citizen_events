@@ -5,7 +5,7 @@ if (!isset($url)) {
 }
 ?>
 <div id="PlansAdminIndex">
-    <h2><?php echo __('計畫', true); ?></h2>
+    <h2>計畫/專案</h2>
     <div class="btn-group">
         <?php echo $this->Html->link('新增', array('action' => 'add'), array('class' => 'btn btn-default dialogControl')); ?>
     </div>
@@ -23,6 +23,9 @@ if (!isset($url)) {
                 <th>辦理形式</th>
                 <th><?php echo $this->Paginator->sort('Plan.date_begin', '計畫期程（起）', array('url' => $url)); ?></th>
                 <th><?php echo $this->Paginator->sort('Plan.date_end', '計畫期程（迄）', array('url' => $url)); ?></th>
+                <th>活動場數</th>
+                <th>公民參與人數</th>
+                <th>工作人員培訓人數</th>
                 <th>協辦單位</th>
                 <th>備註</th>
                 <th class="actions">操作</th>
@@ -55,6 +58,15 @@ if (!isset($url)) {
                     echo $item['Plan']['date_end'];
                     ?></td>
                 <td><?php
+                    echo $this->Html->link($item['Plan']['count_events'], '/admin/events/index/' . $item['Plan']['id']);;
+                    ?></td>
+                <td><?php
+                    echo $this->Html->link($item['Plan']['count_citizen'], '/admin/citizens/index/' . $item['Plan']['id']);;
+                    ?></td>
+                <td><?php
+                    echo $this->Html->link($item['Plan']['count_speaker'], '/admin/speakers/index/' . $item['Plan']['id']);;
+                    ?></td>
+                <td><?php
                     echo $item['Plan']['units'];
                     ?></td>
                 <td><?php
@@ -62,8 +74,8 @@ if (!isset($url)) {
                     ?></td>
                 <td>
                     <div class="btn-group">
-                                <?php echo $this->Html->link('編輯', array('action' => 'edit', $item['Plan']['id']), array('class' => 'btn btn-default dialogControl')); ?>
-                                <?php echo $this->Html->link('刪除', array('action' => 'delete', $item['Plan']['id']), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
+                        <?php echo $this->Html->link('編輯', array('action' => 'edit', $item['Plan']['id']), array('class' => 'btn btn-default dialogControl')); ?>
+                            <?php echo $this->Html->link('刪除', array('action' => 'delete', $item['Plan']['id']), array('class' => 'btn btn-default'), '確定要刪除？'); ?>
                     </div>
                 </td>
             </tr>

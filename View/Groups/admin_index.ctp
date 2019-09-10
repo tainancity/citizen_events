@@ -40,7 +40,7 @@
             <td>
                 <div class="btn-group">
                         <?php echo $this->Html->link('編輯', array('action' => 'edit', $group['Group']['id']), array('class' => 'btn btn-default dialogControl')); ?>
-                        <?php echo $this->Html->link('刪除', array('action' => 'delete', $group['Group']['id']), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
+                        <?php echo $this->Html->link('刪除', array('action' => 'delete', $group['Group']['id']), array('class' => 'btn btn-default'), '確定要刪除？'); ?>
                         <?php echo $this->Html->link(__('Sub group', true), array('action' => 'index', $group['Group']['id']), array('class' => 'btn btn-default')); ?>
                         <?php
                         if ($group['Group']['id'] != 1) {
