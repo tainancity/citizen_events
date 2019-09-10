@@ -1,17 +1,14 @@
 <?php
-
-if (!isset($url)) {
+if(!isset($url)) {
     $url = array();
-}
-
-if (!empty($foreignId) && !empty($foreignModel)) {
-    $url = array($foreignModel, $foreignId);
 }
 ?>
 <div id="SpeakersAdminIndex">
-    <h2><?php echo __('講師', true); ?></h2>
+    <h2><?php echo $plan['Plan']['name']; ?>的工作人員</h2>
     <div class="btn-group">
-        <?php echo $this->Html->link('新增', array_merge($url, array('action' => 'add')), array('class' => 'btn btn-default dialogControl')); ?>
+        <?php echo $this->Html->link('新增工作人員', array('action' => 'add', $plan['Plan']['id']), array('class' => 'btn btn-default dialogControl')); ?>
+        <?php echo $this->Html->link('相關活動', '/admin/events/index/' . $plan['Plan']['id'], array('class' => 'btn btn-default')); ?>
+        <?php echo $this->Html->link('相關公民', '/admin/citizens/index/' . $plan['Plan']['id'], array('class' => 'btn btn-default')); ?>
     </div>
     <div><?php
         echo $this->Paginator->counter(array(
@@ -22,15 +19,12 @@ if (!empty($foreignId) && !empty($foreignModel)) {
     <table class="table table-bordered" id="SpeakersAdminIndexTable">
         <thead>
             <tr>
-                <?php if (empty($scope['Speaker.Event_id'])): ?>
                 <th><?php echo $this->Paginator->sort('Speaker.Event_id', '活動', array('url' => $url)); ?></th>
-                <?php endif; ?>
-
-                <th><?php echo $this->Paginator->sort('Speaker.name', '姓名', array('url' => $url)); ?></th>
+                <th>姓名</th>
                 <th><?php echo $this->Paginator->sort('Speaker.phone', '手機號碼', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Speaker.title', '職稱', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Speaker.unit', '服務機關單位', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Speaker.note', '備註', array('url' => $url)); ?></th>
+                <th>職稱</th>
+                <th>服務機關單位</th>
+                <th>備註</th>
                 <th class="actions">操作</th>
             </tr>
         </thead>
@@ -44,20 +38,9 @@ if (!empty($foreignId) && !empty($foreignModel)) {
                 }
                 ?>
             <tr<?php echo $class; ?>>
-                    <?php if (empty($scope['Speaker.Event_id'])): ?>
                 <td><?php
-                if (empty($item['Event']['id'])) {
-                    echo '--';
-                } else {
-                    echo $this->Html->link($item['Event']['id'], array(
-                        'controller' => 'events',
-                        'action' => 'view',
-                        $item['Event']['id']
-                    ));
-                }
+                    echo $events[$item['Speaker']['Event_id']];
                         ?></td>
-                    <?php endif; ?>
-
                 <td><?php
                     echo $item['Speaker']['name'];
                     ?></td>
@@ -75,9 +58,8 @@ if (!empty($foreignId) && !empty($foreignModel)) {
                     ?></td>
                 <td>
                     <div class="btn-group">
-                                <?php echo $this->Html->link('檢視', array('action' => 'view', $item['Speaker']['id']), array('class' => 'btn btn-default dialogControl')); ?>
-                                <?php echo $this->Html->link('編輯', array('action' => 'edit', $item['Speaker']['id']), array('class' => 'btn btn-default dialogControl')); ?>
-                                <?php echo $this->Html->link('刪除', array('action' => 'delete', $item['Speaker']['id']), array('class' => 'btn btn-default'), '確定要刪除？'); ?>
+                        <?php echo $this->Html->link('編輯', array('action' => 'edit', $item['Speaker']['id']), array('class' => 'btn btn-default dialogControl')); ?>
+                        <?php echo $this->Html->link('刪除', array('action' => 'delete', $item['Speaker']['id']), array('class' => 'btn btn-default'), '確定要刪除？'); ?>
                     </div>
                 </td>
             </tr>
@@ -86,10 +68,4 @@ if (!empty($foreignId) && !empty($foreignModel)) {
     </table>
     <div class="paging"><?php echo $this->element('paginator'); ?></div>
     <div id="SpeakersAdminIndexPanel"></div>
-    <script type="text/javascript">
-        //<![CDATA[
-        $(function () {
-        });
-        //]]>
-    </script>
 </div>
