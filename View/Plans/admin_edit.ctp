@@ -1,10 +1,7 @@
 <div id="PlansAdminEdit">
     <?php echo $this->Form->create('Plan', array('type' => 'file')); ?>
     <div class="Plans form">
-        <fieldset>
-            <legend><?php
-                echo __('Edit 計畫', true);
-                ?></legend>
+        <h3>編輯計畫</h3>
             <?php
             echo $this->Form->input('Plan.id');
             echo $this->Form->input('Plan.name', array(
@@ -13,12 +10,24 @@
                 'class' => 'form-control',
             ));
             echo $this->Form->input('Plan.description', array(
-                'label' => '計畫概述',
+                'label' => '計畫概述（50-100字）',
                 'div' => 'form-group',
                 'class' => 'form-control',
             ));
             echo $this->Form->input('Plan.plan_type', array(
                 'label' => '辦理形式',
+                'div' => 'form-group',
+                'class' => 'form-control',
+            ));
+            echo $this->Form->input('Plan.date_begin', array(
+                'type' => 'text',
+                'label' => '計畫期程（起）',
+                'div' => 'form-group',
+                'class' => 'form-control',
+            ));
+            echo $this->Form->input('Plan.date_end', array(
+                'type' => 'text',
+                'label' => '計畫期程（迄）',
                 'div' => 'form-group',
                 'class' => 'form-control',
             ));
@@ -33,9 +42,16 @@
                 'class' => 'form-control',
             ));
             ?>
-        </fieldset>
     </div>
-            <?php
-            echo $this->Form->end(__('Submit', true));
-            ?>
+    <?php echo $this->Form->end('送出'); ?>
 </div>
+<script>
+    $(function() {
+        $('#PlanDateBegin').datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+        $('#PlanDateEnd').datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+    });
+</script>

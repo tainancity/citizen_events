@@ -15,13 +15,6 @@ class PlansController extends AppController {
         $this->set('items', $this->paginate($this->Plan));
     }
 
-    function admin_view($id = null) {
-        if (!$id || !$this->data = $this->Plan->read(null, $id)) {
-            $this->Session->setFlash('請依照網頁指示操作');
-            $this->redirect(array('action' => 'index'));
-        }
-    }
-
     function admin_add() {
         if (!empty($this->data)) {
             $this->Plan->create();

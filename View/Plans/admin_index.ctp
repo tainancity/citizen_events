@@ -18,12 +18,13 @@ if (!isset($url)) {
     <table class="table table-bordered" id="PlansAdminIndexTable">
         <thead>
             <tr>
-
-                <th><?php echo $this->Paginator->sort('Plan.name', '計畫名稱（專案名稱）', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Plan.description', '計畫概述', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Plan.plan_type', '辦理形式', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Plan.units', '協辦單位', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Plan.note', '備註', array('url' => $url)); ?></th>
+                <th>計畫名稱（專案名稱）</th>
+                <th>計畫概述</th>
+                <th>辦理形式</th>
+                <th><?php echo $this->Paginator->sort('Plan.date_begin', '計畫期程（起）', array('url' => $url)); ?></th>
+                <th><?php echo $this->Paginator->sort('Plan.date_end', '計畫期程（迄）', array('url' => $url)); ?></th>
+                <th>協辦單位</th>
+                <th>備註</th>
                 <th class="actions">操作</th>
             </tr>
         </thead>
@@ -48,6 +49,12 @@ if (!isset($url)) {
                     echo $item['Plan']['plan_type'];
                     ?></td>
                 <td><?php
+                    echo $item['Plan']['date_begin'];
+                    ?></td>
+                <td><?php
+                    echo $item['Plan']['date_end'];
+                    ?></td>
+                <td><?php
                     echo $item['Plan']['units'];
                     ?></td>
                 <td><?php
@@ -55,7 +62,6 @@ if (!isset($url)) {
                     ?></td>
                 <td>
                     <div class="btn-group">
-                                <?php echo $this->Html->link('檢視', array('action' => 'view', $item['Plan']['id']), array('class' => 'btn btn-default dialogControl')); ?>
                                 <?php echo $this->Html->link('編輯', array('action' => 'edit', $item['Plan']['id']), array('class' => 'btn btn-default dialogControl')); ?>
                                 <?php echo $this->Html->link('刪除', array('action' => 'delete', $item['Plan']['id']), array('class' => 'btn btn-default'), __('Delete the item, sure?', true)); ?>
                     </div>
@@ -66,10 +72,4 @@ if (!isset($url)) {
     </table>
     <div class="paging"><?php echo $this->element('paginator'); ?></div>
     <div id="PlansAdminIndexPanel"></div>
-    <script type="text/javascript">
-        //<![CDATA[
-        $(function () {
-        });
-        //]]>
-    </script>
 </div>

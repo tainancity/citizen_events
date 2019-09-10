@@ -3,7 +3,7 @@
     <head>
         <?php echo $this->Html->charset(); ?>
         <title>
-            events::
+            台南市公民參與資料庫::
             <?php echo $title_for_layout; ?>
         </title><?php
             echo $this->Html->meta('icon');
@@ -20,7 +20,7 @@
     <body>
         <div class="container">
             <div id="header">
-                <h1><?php echo $this->Html->link('events', '/'); ?></h1>
+                <h1><?php echo $this->Html->link('台南市公民參與資料庫', '/'); ?></h1>
             </div>
             <div id="content">
                 <div class="btn-group">
@@ -55,21 +55,13 @@
                         ), 'http://www.cakephp.org/', array('target' => '_blank', 'escape' => false)
                 );
                 ?>
-                & <?php echo $this->Html->link('Just This Computer Studio', 'http://olc.tw/', array('target' => '_blank')); ?>
+                & <?php echo $this->Html->link('台南智慧城市辦公室', 'https://smartcity.tainan.tw/', array('target' => '_blank')); ?>
             </div>
         </div>
         <?php
         echo $this->element('sql_dump');
         ?>
         <script type="text/javascript">
-            //<![CDATA[
-            $(function () {
-                $('a.dialogControl').click(function () {
-                    dialogFull(this);
-                    return false;
-                });
-            });
-            //]]>
         </script>
     </body>
 </html>
