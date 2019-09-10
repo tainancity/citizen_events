@@ -1,21 +1,16 @@
 <div id="CitizensAdminEdit">
     <?php echo $this->Form->create('Citizen', array('type' => 'file')); ?>
     <div class="Citizens form">
-        <fieldset>
-            <legend><?php
-                echo __('Edit 公民', true);
-                ?></legend>
+            <h2>編輯公民</h2>
             <?php
             echo $this->Form->input('Citizen.id');
-            foreach ($belongsToModels AS $key => $model) {
-                echo $this->Form->input('Citizen.' . $model['foreignKey'], array(
-                    'type' => 'select',
-                    'label' => $model['label'],
-                    'options' => $$key,
-                    'div' => 'form-group',
-                    'class' => 'form-control',
-                ));
-            }
+            echo $this->Form->input('Citizen.Event_id', array(
+                'type' => 'select',
+                'options' => $events,
+                'label' => '活動',
+                'div' => 'form-group',
+                'class' => 'form-control',
+            ));
             echo $this->Form->input('Citizen.role', array(
                 'label' => '擔任角色',
                 'div' => 'form-group',
@@ -42,9 +37,8 @@
                 'class' => 'form-control',
             ));
             ?>
-        </fieldset>
     </div>
             <?php
-            echo $this->Form->end(__('Submit', true));
+            echo $this->Form->end('送出');
             ?>
 </div>

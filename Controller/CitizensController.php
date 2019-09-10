@@ -8,77 +8,61 @@ class CitizensController extends AppController {
     public $paginate = array();
     public $helpers = array();
 
-    function admin_index($foreignModel = null, $foreignId = 0, $op = null) {
-        $foreignId = intval($foreignId);
-        $foreignKeys = array();
-
-        $foreignKeys = array(
-            'Event' => 'Event_id',
-        );
-
-
-        $scope = array();
-        if (array_key_exists($foreignModel, $foreignKeys) && $foreignId > 0) {
-            $scope['Citizen.' . $foreignKeys[$foreignModel]] = $foreignId;
-        } else {
-            $foreignModel = '';
+    function admin_index($planId = 0) {
+        $planId = intval($planId);
+        if($planId > 0) {
+            $plan = $this->Citizen->Plan->find('first', array(
+                'conditions' => array('Plan.id' => $planId),
+            ));
         }
-        $this->set('scope', $scope);
+        if(empty($plan)) {
+            $this->Session->setFlash('請依照網頁指示操作');
+            $this->redirect('/admin/plans');
+        }
+        
+        $scope = array(
+            'Citizen.Plan_id' => $planId,
+        );
         $this->paginate['Citizen']['limit'] = 20;
         $items = $this->paginate($this->Citizen, $scope);
 
         $this->set('items', $items);
-        $this->set('foreignId', $foreignId);
-        $this->set('foreignModel', $foreignModel);
+        $this->set('events', $this->Citizen->Event->find('list', array(
+            'conditions' => array(
+                'Event.Plan_id' => $planId,
+            ),
+        )));
+        $this->set('plan', $plan);
     }
 
-    function admin_view($id = null) {
-        if (!$id || !$this->data = $this->Citizen->read(null, $id)) {
+    function admin_add($planId = 0) {
+        $planId = intval($planId);
+        if($planId > 0) {
+            $plan = $this->Citizen->Plan->find('first', array(
+                'conditions' => array('Plan.id' => $planId),
+            ));
+        }
+        if(empty($plan)) {
             $this->Session->setFlash('請依照網頁指示操作');
-            $this->redirect(array('action' => 'index'));
+            $this->redirect('/admin/plans');
         }
-    }
-
-    function admin_add($foreignModel = null, $foreignId = 0) {
-        $foreignId = intval($foreignId);
-        $foreignKeys = array(
-            'Event' => 'Event_id',
-        );
-        if (array_key_exists($foreignModel, $foreignKeys) && $foreignId > 0) {
-            if (!empty($this->data)) {
-                $this->data['Citizen'][$foreignKeys[$foreignModel]] = $foreignId;
-            }
-        } else {
-            $foreignModel = '';
-        }
+        $this->set('plan', $plan);
+        $this->set('events', $this->Citizen->Event->find('list', array(
+            'conditions' => array(
+                'Event.Plan_id' => $planId,
+            ),
+        )));
         if (!empty($this->data)) {
             $this->Citizen->create();
-            if ($this->Citizen->save($this->data)) {
+            $dataToSave = $this->data;
+            $dataToSave['Citizen']['Plan_id'] = $planId;
+            if ($this->Citizen->save($dataToSave)) {
                 $this->Session->setFlash('資料已經儲存');
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(array('action' => 'index', $planId));
             } else {
                 $this->Session->setFlash('資料儲存時發生錯誤');
             }
         }
-        $this->set('foreignId', $foreignId);
-        $this->set('foreignModel', $foreignModel);
-
-        $belongsToModels = array(
-            'listEvent' => array(
-                'label' => '活動',
-                'modelName' => 'Event',
-                'foreignKey' => 'Event_id',
-            ),
-        );
-
-        foreach ($belongsToModels AS $key => $model) {
-            if ($foreignModel == $model['modelName']) {
-                unset($belongsToModels[$key]);
-                continue;
-            }
-            $this->set($key, $this->Citizen->{$model['modelName']}->find('list'));
-        }
-        $this->set('belongsToModels', $belongsToModels);
     }
 
     function admin_edit($id = null) {
@@ -86,29 +70,22 @@ class CitizensController extends AppController {
             $this->Session->setFlash('請依照網頁指示操作');
             $this->redirect($this->referer());
         }
+        $dbItem = $this->Citizen->read(null, $id);
         if (!empty($this->data)) {
             if ($this->Citizen->save($this->data)) {
                 $this->Session->setFlash('資料已經儲存');
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(array('action' => 'index', $dbItem['Citizen']['Plan_id']));
             } else {
                 $this->Session->setFlash('資料儲存時發生錯誤');
             }
         }
         $this->set('id', $id);
-        $this->data = $this->Citizen->read(null, $id);
-
-        $belongsToModels = array(
-            'listEvent' => array(
-                'label' => '活動',
-                'modelName' => 'Event',
-                'foreignKey' => 'Event_id',
+        $this->data = $dbItem;
+        $this->set('events', $this->Citizen->Event->find('list', array(
+            'conditions' => array(
+                'Event.Plan_id' => $this->data['Citizen']['Plan_id'],
             ),
-        );
-
-        foreach ($belongsToModels AS $key => $model) {
-            $this->set($key, $this->Citizen->{$model['modelName']}->find('list'));
-        }
-        $this->set('belongsToModels', $belongsToModels);
+        )));
     }
 
     function admin_delete($id = null) {

@@ -1,29 +1,17 @@
 <div id="CitizensAdminAdd">
         <?php
-    $url = array();
-    if (!empty($foreignId) && !empty($foreignModel)) {
-        $url = array('action' => 'add', $foreignModel, $foreignId);
-    } else {
-        $url = array('action' => 'add');
-        $foreignModel = '';
-    }
-    echo $this->Form->create('Citizen', array('type' => 'file', 'url' => $url));
+    echo $this->Form->create('Citizen', array('type' => 'file', 'url' => array('action' => 'add', $plan['Plan']['id'])));
     ?>
     <div class="Citizens form">
-        <fieldset>
-            <legend><?php
-                echo __('Add 公民', true);
-                ?></legend>
+        <h2>新增<?php echo $plan['Plan']['name']; ?>的公民</h2>
             <?php
-            foreach ($belongsToModels AS $key => $model) {
-                echo $this->Form->input('Citizen.' . $model['foreignKey'], array(
-                    'type' => 'select',
-                    'label' => $model['label'],
-                    'options' => $$key,
-                    'div' => 'form-group',
-                    'class' => 'form-control',
-                ));
-            }
+            echo $this->Form->input('Citizen.Event_id', array(
+                'type' => 'select',
+                'options' => $events,
+                'label' => '活動',
+                'div' => 'form-group',
+                'class' => 'form-control',
+            ));
             echo $this->Form->input('Citizen.role', array(
                 'label' => '擔任角色',
                 'div' => 'form-group',
@@ -50,9 +38,8 @@
                 'class' => 'form-control',
             ));
             ?>
-        </fieldset>
     </div>
         <?php
-    echo $this->Form->end(__('Submit', true));
+    echo $this->Form->end('送出');
     ?>
 </div>

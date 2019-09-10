@@ -4,14 +4,13 @@ if (!isset($url)) {
     $url = array();
 }
 
-if (!empty($foreignId) && !empty($foreignModel)) {
-    $url = array($foreignModel, $foreignId);
-}
 ?>
 <div id="CitizensAdminIndex">
-    <h2><?php echo __('公民', true); ?></h2>
+    <h2><?php echo $plan['Plan']['name']; ?>的公民</h2>
     <div class="btn-group">
-        <?php echo $this->Html->link('新增', array_merge($url, array('action' => 'add')), array('class' => 'btn btn-default dialogControl')); ?>
+        <?php echo $this->Html->link('新增公民', array_merge($url, array('action' => 'add', $plan['Plan']['id'])), array('class' => 'btn btn-default')); ?>
+        <?php echo $this->Html->link('相關活動', '/admin/events/index/' . $plan['Plan']['id'], array('class' => 'btn btn-default')); ?>
+        <?php echo $this->Html->link('相關工作人員', '/admin/speakers/index/' . $plan['Plan']['id'], array('class' => 'btn btn-default')); ?>
     </div>
     <div><?php
         echo $this->Paginator->counter(array(
@@ -22,15 +21,12 @@ if (!empty($foreignId) && !empty($foreignModel)) {
     <table class="table table-bordered" id="CitizensAdminIndexTable">
         <thead>
             <tr>
-                <?php if (empty($scope['Citizen.Event_id'])): ?>
                 <th><?php echo $this->Paginator->sort('Citizen.Event_id', '活動', array('url' => $url)); ?></th>
-                <?php endif; ?>
-
                 <th><?php echo $this->Paginator->sort('Citizen.role', '擔任角色', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Citizen.name', '姓名', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Citizen.phone', '手機號碼', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Citizen.unit', '服務機關單位', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Citizen.note', '備註', array('url' => $url)); ?></th>
+                <th>姓名</th>
+                <th>手機號碼</th>
+                <th>服務機關單位</th>
+                <th>備註</th>
                 <th class="actions">操作</th>
             </tr>
         </thead>
@@ -44,20 +40,9 @@ if (!empty($foreignId) && !empty($foreignModel)) {
                 }
                 ?>
             <tr<?php echo $class; ?>>
-                    <?php if (empty($scope['Citizen.Event_id'])): ?>
                 <td><?php
-                if (empty($item['Event']['id'])) {
-                    echo '--';
-                } else {
-                    echo $this->Html->link($item['Event']['id'], array(
-                        'controller' => 'events',
-                        'action' => 'view',
-                        $item['Event']['id']
-                    ));
-                }
+                    echo $events[$item['Citizen']['Event_id']];
                         ?></td>
-                    <?php endif; ?>
-
                 <td><?php
                     echo $item['Citizen']['role'];
                     ?></td>
@@ -75,7 +60,6 @@ if (!empty($foreignId) && !empty($foreignModel)) {
                     ?></td>
                 <td>
                     <div class="btn-group">
-                                <?php echo $this->Html->link('檢視', array('action' => 'view', $item['Citizen']['id']), array('class' => 'btn btn-default dialogControl')); ?>
                                 <?php echo $this->Html->link('編輯', array('action' => 'edit', $item['Citizen']['id']), array('class' => 'btn btn-default dialogControl')); ?>
                                 <?php echo $this->Html->link('刪除', array('action' => 'delete', $item['Citizen']['id']), array('class' => 'btn btn-default'), '確定要刪除？'); ?>
                     </div>
@@ -86,10 +70,4 @@ if (!empty($foreignId) && !empty($foreignModel)) {
     </table>
     <div class="paging"><?php echo $this->element('paginator'); ?></div>
     <div id="CitizensAdminIndexPanel"></div>
-    <script type="text/javascript">
-        //<![CDATA[
-        $(function () {
-        });
-        //]]>
-    </script>
 </div>
