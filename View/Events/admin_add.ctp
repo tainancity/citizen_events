@@ -1,29 +1,11 @@
 <div id="EventsAdminAdd">
         <?php
-    $url = array();
-    if (!empty($foreignId) && !empty($foreignModel)) {
-        $url = array('action' => 'add', $foreignModel, $foreignId);
-    } else {
-        $url = array('action' => 'add');
-        $foreignModel = '';
-    }
-    echo $this->Form->create('Event', array('type' => 'file', 'url' => $url));
+    echo $this->Form->create('Event', array('type' => 'file', 'url' => array('action' => 'add', $plan['Plan']['id'])));
     ?>
     <div class="Events form">
-        <fieldset>
-            <legend><?php
-                echo __('Add 活動', true);
-                ?></legend>
+        
+            <h2>新增<?php echo $plan['Plan']['name']; ?>的活動</h2>
             <?php
-            foreach ($belongsToModels AS $key => $model) {
-                echo $this->Form->input('Event.' . $model['foreignKey'], array(
-                    'type' => 'select',
-                    'label' => $model['label'],
-                    'options' => $$key,
-                    'div' => 'form-group',
-                    'class' => 'form-control',
-                ));
-            }
             echo $this->Form->input('Event.name', array(
                 'label' => '活動（會議）名稱',
                 'div' => 'form-group',
@@ -35,11 +17,13 @@
                 'class' => 'form-control',
             ));
             echo $this->Form->input('Event.date_begin', array(
+                'type' => 'text',
                 'label' => '活動期程（起）',
                 'div' => 'form-group',
                 'class' => 'form-control',
             ));
             echo $this->Form->input('Event.date_end', array(
+                'type' => 'text',
                 'label' => '活動期程（訖）',
                 'div' => 'form-group',
                 'class' => 'form-control',
@@ -55,9 +39,18 @@
                 'class' => 'form-control',
             ));
             ?>
-        </fieldset>
     </div>
         <?php
-    echo $this->Form->end(__('Submit', true));
+    echo $this->Form->end('送出');
     ?>
 </div>
+<script>
+    $(function() {
+        $('#EventDateBegin').datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+        $('#EventDateEnd').datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+    });
+</script>

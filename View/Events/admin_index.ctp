@@ -4,14 +4,13 @@ if (!isset($url)) {
     $url = array();
 }
 
-if (!empty($foreignId) && !empty($foreignModel)) {
-    $url = array($foreignModel, $foreignId);
-}
 ?>
 <div id="EventsAdminIndex">
-    <h2><?php echo __('活動', true); ?></h2>
+    <h2><?php echo $plan['Plan']['name']; ?>的活動</h2>
     <div class="btn-group">
-        <?php echo $this->Html->link('新增', array_merge($url, array('action' => 'add')), array('class' => 'btn btn-default dialogControl')); ?>
+        <?php echo $this->Html->link('新增活動', array('action' => 'add', $plan['Plan']['id']), array('class' => 'btn btn-default')); ?>
+        <?php echo $this->Html->link('相關公民', '/admin/citizens/index/' . $plan['Plan']['id'], array('class' => 'btn btn-default')); ?>
+        <?php echo $this->Html->link('相關工作人員', '/admin/speakers/index/' . $plan['Plan']['id'], array('class' => 'btn btn-default')); ?>
     </div>
     <div><?php
         echo $this->Paginator->counter(array(
@@ -22,16 +21,13 @@ if (!empty($foreignId) && !empty($foreignModel)) {
     <table class="table table-bordered" id="EventsAdminIndexTable">
         <thead>
             <tr>
-                <?php if (empty($scope['Event.Plan_id'])): ?>
-                <th><?php echo $this->Paginator->sort('Event.Plan_id', '計畫', array('url' => $url)); ?></th>
-                <?php endif; ?>
-
-                <th><?php echo $this->Paginator->sort('Event.name', '活動（會議）名稱', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Event.event_type', '辦理形式', array('url' => $url)); ?></th>
+                <th>活動（會議）名稱</th>
+                <th>辦理形式</th>
                 <th><?php echo $this->Paginator->sort('Event.date_begin', '活動期程（起）', array('url' => $url)); ?></th>
                 <th><?php echo $this->Paginator->sort('Event.date_end', '活動期程（訖）', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Event.place', '辦理地點', array('url' => $url)); ?></th>
-                <th><?php echo $this->Paginator->sort('Event.note', '備註', array('url' => $url)); ?></th>
+                <th>辦理地點</th>
+                <th>公民參與人數</th>
+                <th>備註</th>
                 <th class="actions">操作</th>
             </tr>
         </thead>
@@ -45,20 +41,6 @@ if (!empty($foreignId) && !empty($foreignModel)) {
                 }
                 ?>
             <tr<?php echo $class; ?>>
-                    <?php if (empty($scope['Event.Plan_id'])): ?>
-                <td><?php
-                if (empty($item['Plan']['id'])) {
-                    echo '--';
-                } else {
-                    echo $this->Html->link($item['Plan']['id'], array(
-                        'controller' => 'plans',
-                        'action' => 'view',
-                        $item['Plan']['id']
-                    ));
-                }
-                        ?></td>
-                    <?php endif; ?>
-
                 <td><?php
                     echo $item['Event']['name'];
                     ?></td>
@@ -75,13 +57,15 @@ if (!empty($foreignId) && !empty($foreignModel)) {
                     echo $item['Event']['place'];
                     ?></td>
                 <td><?php
+                    echo $item['Event']['count_people'];
+                    ?></td>
+                <td><?php
                     echo $item['Event']['note'];
                     ?></td>
                 <td>
                     <div class="btn-group">
-                                <?php echo $this->Html->link('檢視', array('action' => 'view', $item['Event']['id']), array('class' => 'btn btn-default dialogControl')); ?>
-                                <?php echo $this->Html->link('編輯', array('action' => 'edit', $item['Event']['id']), array('class' => 'btn btn-default dialogControl')); ?>
-                                <?php echo $this->Html->link('刪除', array('action' => 'delete', $item['Event']['id']), array('class' => 'btn btn-default'), '確定要刪除？'); ?>
+                        <?php echo $this->Html->link('編輯', array('action' => 'edit', $item['Event']['id']), array('class' => 'btn btn-default dialogControl')); ?>
+                        <?php echo $this->Html->link('刪除', array('action' => 'delete', $item['Event']['id']), array('class' => 'btn btn-default'), '確定要刪除？'); ?>
                     </div>
                 </td>
             </tr>
@@ -90,10 +74,4 @@ if (!empty($foreignId) && !empty($foreignModel)) {
     </table>
     <div class="paging"><?php echo $this->element('paginator'); ?></div>
     <div id="EventsAdminIndexPanel"></div>
-    <script type="text/javascript">
-        //<![CDATA[
-        $(function () {
-        });
-        //]]>
-    </script>
 </div>
