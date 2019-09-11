@@ -95,5 +95,68 @@ class EventsController extends AppController {
         }
         $this->redirect(array('action' => 'index', $dbItem['Event']['Plan_id']));
     }
+    
+    public function admin_export($planId = 0) {
+        $planId = intval($planId);
+        if($planId > 0) {
+            $plan = $this->Event->Plan->find('first', array(
+                'conditions' => array('Plan.id' => $planId),
+            ));
+        }
+        if(empty($plan)) {
+            $this->Session->setFlash('請依照網頁指示操作');
+            $this->redirect('/admin/plans');
+        }
+        $this->layout = 'ajax';
+        $this->response->disableCache();
+        $this->response->download($plan['Plan']['name'] . '_活動.csv');
+        $headers = $this->response->header('Content-Type', 'application/csv');
+        foreach ($headers AS $name => $value) {
+            header("{$name}: {$value}");
+        }
+        $f = fopen('php://memory', 'w');
+        $items = $this->Event->find('all', array(
+            'conditions' => array(
+                'Event.Plan_id' => $planId,
+            ),
+            'order' => array(
+                'date_begin' => 'ASC',
+            ),
+        ));
+        $result = array();
+        $result[] = array('活動（會議）名稱', '辦理形式', '活動期程（起）', '活動期程（訖）', '辦理地點', '公民參與人數', '備註');
+        foreach($items AS $k => $v) {
+            $v['Event']['count_people'] = $this->Event->Citizen->find('count', array(
+                'conditions' => array(
+                    'Citizen.Event_id' => $v['Event']['id'],
+                ),
+            ));
+            $v['Event']['count_people'] += $this->Event->Speaker->find('count', array(
+                'conditions' => array(
+                    'Speaker.Event_id' => $v['Event']['id'],
+                ),
+            ));
+            $result[] = array(
+                $v['Event']['name'],
+                $v['Event']['event_type'],
+                $v['Event']['date_begin'],
+                $v['Event']['date_end'],
+                $v['Event']['place'],
+                $v['Event']['count_people'],
+                $v['Event']['note'],
+                    );
+        }
+        if (!empty($result)) {
+            foreach ($result AS $line) {
+                foreach ($line AS $k => $v) {
+                    $line[$k] = mb_convert_encoding($v, 'big5', 'utf-8');
+                }
+                fputcsv($f, $line);
+            }
+            fseek($f, 0);
+        }
+        fpassthru($f);
+        exit();
+    }
 
 }
