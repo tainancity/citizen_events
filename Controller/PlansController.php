@@ -70,5 +70,62 @@ class PlansController extends AppController {
         }
         $this->redirect(array('action' => 'index'));
     }
+    
+    public function admin_export() {
+        $this->layout = 'ajax';
+        $this->response->disableCache();
+        $this->response->download('計畫.csv');
+        $headers = $this->response->header('Content-Type', 'application/csv');
+        foreach ($headers AS $name => $value) {
+            header("{$name}: {$value}");
+        }
+        $f = fopen('php://memory', 'w');
+        $items = $this->Plan->find('all', array(
+            'order' => array(
+                'date_begin' => 'ASC',
+            ),
+        ));
+        $result = array();
+        $result[] = array('計畫名稱（專案名稱）', '計畫概述', '辦理形式', '計畫期程（起）', '計畫期程（迄）', '活動場數', '公民參與人數', '工作人員培訓人數', '協辦單位', '備註');
+        foreach($items AS $k => $v) {
+            $v['Plan']['count_events'] = $this->Plan->Event->find('count', array(
+                'conditions' => array(
+                    'Event.Plan_id' => $v['Plan']['id']
+                ),
+            ));
+            $v['Plan']['count_citizen'] = $this->Plan->Citizen->find('count', array(
+                'conditions' => array(
+                    'Citizen.Plan_id' => $v['Plan']['id']
+                ),
+            ));
+            $v['Plan']['count_speaker'] = $this->Plan->Speaker->find('count', array(
+                'conditions' => array(
+                    'Speaker.Plan_id' => $v['Plan']['id']
+                ),
+            ));
+            $result[] = array(
+                $v['Plan']['name'],
+                $v['Plan']['description'],
+                $v['Plan']['plan_type'],
+                $v['Plan']['date_begin'],
+                $v['Plan']['date_end'],
+                $v['Plan']['count_events'],
+                $v['Plan']['count_citizen'],
+                $v['Plan']['count_speaker'],
+                $v['Plan']['units'],
+                $v['Plan']['note']);
+        }
+        if (!empty($result)) {
+            foreach ($result AS $line) {
+                foreach ($line AS $k => $v) {
+                    $line[$k] = mb_convert_encoding($v, 'big5', 'utf-8');
+                }
+                fputcsv($f, $line);
+            }
+            fseek($f, 0);
+        }
+        fpassthru($f);
+        exit();
+    }
 
 }

@@ -7,7 +7,8 @@ if (!isset($url)) {
 <div id="PlansAdminIndex">
     <h2>計畫/專案</h2>
     <div class="btn-group">
-        <?php echo $this->Html->link('新增', array('action' => 'add'), array('class' => 'btn btn-default dialogControl')); ?>
+        <?php echo $this->Html->link('新增', array('action' => 'add'), array('class' => 'btn btn-default')); ?>
+        <?php echo $this->Html->link('匯出', array('action' => 'export'), array('class' => 'btn btn-default')); ?>
     </div>
     <div><?php
         echo $this->Paginator->counter(array(
