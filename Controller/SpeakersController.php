@@ -96,5 +96,62 @@ class SpeakersController extends AppController {
         }
         $this->redirect(array('action' => 'index'));
     }
+    
+    public function admin_export($planId = 0) {
+        $planId = intval($planId);
+        if ($planId > 0) {
+            $plan = $this->Speaker->Plan->find('first', array(
+                'conditions' => array('Plan.id' => $planId),
+            ));
+        }
+        if (empty($plan)) {
+            $this->Session->setFlash('請依照網頁指示操作');
+            $this->redirect('/admin/plans');
+        }
+        $this->layout = 'ajax';
+        $this->response->disableCache();
+        $this->response->download($plan['Plan']['name'] . '_工作人員.csv');
+        $headers = $this->response->header('Content-Type', 'application/csv');
+        foreach ($headers AS $name => $value) {
+            header("{$name}: {$value}");
+        }
+        $f = fopen('php://memory', 'w');
+        $items = $this->Speaker->find('all', array(
+            'conditions' => array(
+                'Speaker.Plan_id' => $planId,
+            ),
+            'order' => array(
+                'Event_id' => 'ASC',
+            ),
+        ));
+        $events = $this->Speaker->Event->find('list', array(
+            'conditions' => array(
+                'Event.Plan_id' => $planId,
+            ),
+        ));
+        $result = array();
+        $result[] = array('活動', '姓名', '手機號碼', '職稱', '服務機關單位', '備註');
+        foreach ($items AS $k => $v) {
+            $result[] = array(
+                $events[$v['Speaker']['Event_id']],
+                $v['Speaker']['name'],
+                $v['Speaker']['phone'],
+                $v['Speaker']['title'],
+                $v['Speaker']['unit'],
+                $v['Speaker']['note'],
+            );
+        }
+        if (!empty($result)) {
+            foreach ($result AS $line) {
+                foreach ($line AS $k => $v) {
+                    $line[$k] = mb_convert_encoding($v, 'big5', 'utf-8');
+                }
+                fputcsv($f, $line);
+            }
+            fseek($f, 0);
+        }
+        fpassthru($f);
+        exit();
+    }
 
 }

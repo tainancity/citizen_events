@@ -6,7 +6,10 @@ if(!isset($url)) {
 <div id="SpeakersAdminIndex">
     <h2><?php echo $plan['Plan']['name']; ?>的工作人員</h2>
     <div class="btn-group">
-        <?php echo $this->Html->link('新增工作人員', array('action' => 'add', $plan['Plan']['id']), array('class' => 'btn btn-default dialogControl')); ?>
+        <?php echo $this->Html->link('新增工作人員', array('action' => 'add', $plan['Plan']['id']), array('class' => 'btn btn-default')); ?>
+        <?php echo $this->Html->link('匯出', array('action' => 'export', $plan['Plan']['id']), array('class' => 'btn btn-default')); ?>
+    </div>
+    <div class="btn-group pull-right">
         <?php echo $this->Html->link('相關活動', '/admin/events/index/' . $plan['Plan']['id'], array('class' => 'btn btn-default')); ?>
         <?php echo $this->Html->link('相關公民', '/admin/citizens/index/' . $plan['Plan']['id'], array('class' => 'btn btn-default')); ?>
     </div>
