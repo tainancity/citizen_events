@@ -77,6 +77,7 @@
         $('#EventDateEnd').datepicker({
             dateFormat: 'yy-mm-dd'
         });
+        $('#EventEventOptions').val($('#EventEventType').val());
         $('#EventEventOptions').change(function() {
             var selectedVal = $(this).val();
             if(selectedVal != '其他') {
