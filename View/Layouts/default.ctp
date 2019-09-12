@@ -3,7 +3,7 @@
     <head>
         <?php echo $this->Html->charset(); ?>
         <title>
-            台南市公民參與資料庫::
+            台南市政府辦理公民參與資料庫::
             <?php echo $title_for_layout; ?>
         </title><?php
             echo $this->Html->meta('icon');
@@ -20,7 +20,7 @@
     <body>
         <div class="container">
             <div id="header">
-                <h1><?php echo $this->Html->link('台南市公民參與資料庫', '/'); ?></h1>
+                <h1><?php echo $this->Html->link('台南市政府辦理公民參與資料庫', '/'); ?></h1>
             </div>
             <div id="content">
                 <div class="btn-group">
