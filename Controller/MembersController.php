@@ -161,32 +161,50 @@ class MembersController extends AppController {
         }
     }
 
-    public function admin_test($count = 50) {
-        $count = intval($count);
-        if ($count > 0) {
-            for ($i = 0; $i < $count; $i++) {
-                $uid = uniqid();
-                $this->Member->create();
-                if ($this->Member->save(array('Member' => array(
-                                'username' => $uid,
-                                'password' => $this->Auth->password($uid),
-                                'group_id' => 1,
-                                'user_status' => 'Y',
-                                'nick' => $uid,
-                                'email' => $uid . '@example.com',
-                    )))) {
-                    $this->Acl->Aro->saveField('alias', 'Member' . $this->Member->getInsertID());
-                }
-            }
-        }
-        $this->Session->setFlash(__('Testing members generated.', true));
-        $this->redirect($this->referer());
-    }
-
     public function admin_acos() {
         $this->loadModel('Permissible.PermissibleAco');
         $this->PermissibleAco->refresh();
         $this->redirect($this->referer());
+    }
+
+    public function admin_generate($groupId = 0) {
+        $organizations = Configure::read('organizations');
+        foreach ($organizations AS $username => $name) {
+            $member = $this->Member->find('first', array(
+                'conditions' => array(
+                    'Member.username' => $username,
+                ),
+            ));
+            $password = random_int(1000, 9999);
+            if (empty($member)) {
+                $this->Member->create();
+                if ($this->Member->save(array('Member' => array(
+                                'group_id' => $groupId,
+                                'username' => $username,
+                                'password' => $password,
+                                'user_status' => 'Y',
+                    )))) {
+                    $memberId = $this->Member->getInsertID();
+                    $this->Acl->Aro->saveField('alias', 'Member/' . $memberId);
+                    $accounts[] = array($name, $username, $password);
+                }
+            } else {
+                $this->Member->id = $member['Member']['id'];
+                if ($this->Member->save(array('Member' => array(
+                                'group_id' => $groupId,
+                                'password' => $password,
+                                'user_status' => 'Y',
+                    )))) {
+                    $aro = & $this->Acl->Aro;
+                    $member = $aro->findByForeignKeyAndModel($member['Member']['id'], 'Member');
+                    $group = $aro->findByForeignKeyAndModel($groupId, 'Group');
+                    $aro->id = $member['Aro']['id'];
+                    $aro->save(array('parent_id' => $group['Aro']['id']));
+                    $accounts[] = array($name, $username, $password);
+                }
+            }
+        }
+        $this->set('accounts', $accounts);
     }
 
 }

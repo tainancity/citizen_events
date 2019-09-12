@@ -24,14 +24,19 @@
             </div>
             <div id="content">
                 <div class="btn-group">
-                    <?php if ($this->Session->read('Auth.User.id')): ?>
-                        <?php echo $this->Html->link('計畫', '/admin/plans', array('class' => 'btn btn-default')); ?>
-                        <?php echo $this->Html->link('Members', '/admin/members', array('class' => 'btn btn-default')); ?>
-                        <?php echo $this->Html->link('Groups', '/admin/groups', array('class' => 'btn btn-default')); ?>
-                        <?php echo $this->Html->link('Logout', '/members/logout', array('class' => 'btn btn-default')); ?>
-                    <?php else: ?>
-                        <?php echo $this->Html->link('Login', '/members/login', array('class' => 'btn btn-default')); ?>
-                    <?php endif; ?>
+                    <?php
+                    $loginMember = Configure::read('loginMember');
+                    if(!empty($loginMember['group_id'])) {
+                        echo $this->Html->link('計畫', '/admin/plans', array('class' => 'btn btn-default'));
+                        if($loginMember['group_id'] == 1) {
+                            echo $this->Html->link('Members', '/admin/members', array('class' => 'btn btn-default'));
+                            echo $this->Html->link('Groups', '/admin/groups', array('class' => 'btn btn-default'));
+                        }
+                        echo $this->Html->link('Logout', '/members/logout', array('class' => 'btn btn-default'));
+                    } else {
+                        echo $this->Html->link('Login', '/members/login', array('class' => 'btn btn-default'));
+                    }
+                    ?>
                     <?php
                     if (!empty($actions_for_layout)) {
                         foreach ($actions_for_layout as $title => $url) {
