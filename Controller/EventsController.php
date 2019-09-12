@@ -25,19 +25,6 @@ class EventsController extends AppController {
         );
         $this->paginate['Event']['limit'] = 20;
         $items = $this->paginate($this->Event, $scope);
-        foreach($items AS $k => $v) {
-            $items[$k]['Event']['count_people'] = $this->Event->Citizen->find('count', array(
-                'conditions' => array(
-                    'Citizen.Event_id' => $v['Event']['id'],
-                ),
-            ));
-            $items[$k]['Event']['count_people'] += $this->Event->Speaker->find('count', array(
-                'conditions' => array(
-                    'Speaker.Event_id' => $v['Event']['id'],
-                ),
-            ));
-        }
-
         $this->set('items', $items);
         $this->set('plan', $plan);
     }
@@ -126,23 +113,13 @@ class EventsController extends AppController {
         $result = array();
         $result[] = array('活動（會議）名稱', '辦理形式', '活動期程（起）', '活動期程（訖）', '辦理地點', '公民參與人數', '備註');
         foreach($items AS $k => $v) {
-            $v['Event']['count_people'] = $this->Event->Citizen->find('count', array(
-                'conditions' => array(
-                    'Citizen.Event_id' => $v['Event']['id'],
-                ),
-            ));
-            $v['Event']['count_people'] += $this->Event->Speaker->find('count', array(
-                'conditions' => array(
-                    'Speaker.Event_id' => $v['Event']['id'],
-                ),
-            ));
             $result[] = array(
                 $v['Event']['name'],
                 $v['Event']['event_type'],
                 $v['Event']['date_begin'],
                 $v['Event']['date_end'],
                 $v['Event']['place'],
-                $v['Event']['count_people'],
+                $v['Event']['count_citizen'],
                 $v['Event']['note'],
                     );
         }

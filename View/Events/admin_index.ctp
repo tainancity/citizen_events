@@ -60,7 +60,7 @@ if (!isset($url)) {
                     echo $item['Event']['place'];
                     ?></td>
                 <td><?php
-                    echo $item['Event']['count_people'];
+                    echo $item['Event']['count_citizen'];
                     ?></td>
                 <td><?php
                     echo $item['Event']['note'];

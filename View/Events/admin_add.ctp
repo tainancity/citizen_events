@@ -48,6 +48,11 @@
                 'div' => 'form-group',
                 'class' => 'form-control',
             ));
+            echo $this->Form->input('Event.count_citizen', array(
+                'label' => '公民參與人數',
+                'div' => 'form-group',
+                'class' => 'form-control',
+            ));
             echo $this->Form->input('Event.place', array(
                 'label' => '辦理地點',
                 'div' => 'form-group',

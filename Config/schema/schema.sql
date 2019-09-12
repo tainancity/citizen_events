@@ -31,7 +31,7 @@ CREATE TABLE `acos` (
   `lft` int(11) DEFAULT NULL,
   `rght` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,6 +109,7 @@ CREATE TABLE `events` (
   `event_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `date_begin` date DEFAULT NULL,
   `date_end` date DEFAULT NULL,
+  `count_citizen` int(11) unsigned NOT NULL,
   `place` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `note` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_by` int(11) unsigned NOT NULL,
@@ -225,4 +226,4 @@ CREATE TABLE `speakers` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-11 10:55:32
+-- Dump completed on 2019-09-12 15:51:02
