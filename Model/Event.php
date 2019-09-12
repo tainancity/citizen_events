@@ -12,6 +12,10 @@ class Event extends AppModel {
             'foreignKey' => 'Plan_id',
             'className' => 'Plan',
         ),
+        'Member' => array(
+            'foreignKey' => 'created_by',
+            'className' => 'Member',
+        ),
     );
     var $hasMany = array(
         'Citizen' => array(

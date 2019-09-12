@@ -94,6 +94,7 @@ class EventsController extends AppController {
             $this->Session->setFlash('請依照網頁指示操作');
             $this->redirect('/admin/plans');
         }
+        $organizations = Configure::read('organizations');
         $this->layout = 'ajax';
         $this->response->disableCache();
         $this->response->download($plan['Plan']['name'] . '_活動.csv');
@@ -109,11 +110,17 @@ class EventsController extends AppController {
             'order' => array(
                 'date_begin' => 'ASC',
             ),
+            'contain' => array(
+                'Member' => array(
+                    'fields' => array('username'),
+                ),
+            ),
         ));
         $result = array();
-        $result[] = array('計畫名稱（專案名稱）', '活動（會議）名稱', '辦理形式', '活動期程（起）', '活動期程（訖）', '辦理地點', '公民參與人數', '備註');
+        $result[] = array('填報單位', '計畫名稱（專案名稱）', '活動（會議）名稱', '辦理形式', '活動期程（起）', '活動期程（訖）', '辦理地點', '公民參與人數', '備註');
         foreach($items AS $k => $v) {
             $result[] = array(
+                isset($organizations[$v['Member']['username']]) ? $organizations[$v['Member']['username']] : '--',
                 $plan['Plan']['name'],
                 $v['Event']['name'],
                 $v['Event']['event_type'],

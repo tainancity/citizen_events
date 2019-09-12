@@ -108,6 +108,7 @@ class CitizensController extends AppController {
             $this->Session->setFlash('請依照網頁指示操作');
             $this->redirect('/admin/plans');
         }
+        $organizations = Configure::read('organizations');
         $this->layout = 'ajax';
         $this->response->disableCache();
         $this->response->download($plan['Plan']['name'] . '_公民.csv');
@@ -123,6 +124,11 @@ class CitizensController extends AppController {
             'order' => array(
                 'Event_id' => 'ASC',
             ),
+            'contain' => array(
+                'Member' => array(
+                    'fields' => array('username'),
+                ),
+            ),
         ));
         $events = $this->Citizen->Event->find('list', array(
             'conditions' => array(
@@ -130,9 +136,10 @@ class CitizensController extends AppController {
             ),
         ));
         $result = array();
-        $result[] = array('計畫名稱（專案名稱）', '活動', '擔任角色', '姓名', '手機號碼', '服務機關單位', '備註');
+        $result[] = array('填報單位', '計畫名稱（專案名稱）', '活動', '擔任角色', '姓名', '手機號碼', '服務機關單位', '備註');
         foreach ($items AS $k => $v) {
             $result[] = array(
+                isset($organizations[$v['Member']['username']]) ? $organizations[$v['Member']['username']] : '--',
                 $plan['Plan']['name'],
                 $events[$v['Citizen']['Event_id']],
                 $v['Citizen']['role'],

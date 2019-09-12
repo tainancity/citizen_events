@@ -8,6 +8,10 @@ class Speaker extends AppModel {
     var $actsAs = array(
     );
     var $belongsTo = array(
+        'Member' => array(
+            'foreignKey' => 'created_by',
+            'className' => 'Member',
+        ),
         'Plan' => array(
             'foreignKey' => 'Plan_id',
             'className' => 'Plan',

@@ -74,6 +74,7 @@ class PlansController extends AppController {
     }
     
     public function admin_export() {
+        $organizations = Configure::read('organizations');
         $this->layout = 'ajax';
         $this->response->disableCache();
         $this->response->download('計畫.csv');
@@ -86,9 +87,14 @@ class PlansController extends AppController {
             'order' => array(
                 'date_begin' => 'ASC',
             ),
+            'contain' => array(
+                'Member' => array(
+                    'fields' => array('username'),
+                ),
+            ),
         ));
         $result = array();
-        $result[] = array('計畫名稱（專案名稱）', '計畫概述', '辦理形式', '計畫期程（起）', '計畫期程（迄）', '活動場數', '公民參與人數', '工作人員培訓人數', '講師人數', '協辦單位', '備註');
+        $result[] = array('填報單位', '計畫名稱（專案名稱）', '計畫概述', '辦理形式', '計畫期程（起）', '計畫期程（迄）', '活動場數', '公民參與人數', '工作人員培訓人數', '講師人數', '協辦單位', '備註');
         foreach($items AS $k => $v) {
             $v['Plan']['count_events'] = $this->Plan->Event->find('count', array(
                 'conditions' => array(
@@ -108,6 +114,7 @@ class PlansController extends AppController {
                 ),
             ));
             $result[] = array(
+                isset($organizations[$v['Member']['username']]) ? $organizations[$v['Member']['username']] : '--',
                 $v['Plan']['name'],
                 $v['Plan']['description'],
                 $v['Plan']['plan_type'],

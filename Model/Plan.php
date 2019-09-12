@@ -7,6 +7,12 @@ class Plan extends AppModel {
     var $name = 'Plan';
     var $actsAs = array(
     );
+    var $belongsTo = array(
+        'Member' => array(
+            'foreignKey' => 'created_by',
+            'className' => 'Member',
+        ),
+    );
     var $hasMany = array(
         'Event' => array(
             'foreignKey' => 'Plan_id',

@@ -16,6 +16,10 @@ class Citizen extends AppModel {
             'foreignKey' => 'Event_id',
             'className' => 'Event',
         ),
+        'Member' => array(
+            'foreignKey' => 'created_by',
+            'className' => 'Member',
+        ),
     );
 
     function afterSave($created, $options = array()) {
