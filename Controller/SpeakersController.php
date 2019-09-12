@@ -130,9 +130,10 @@ class SpeakersController extends AppController {
             ),
         ));
         $result = array();
-        $result[] = array('活動', '姓名', '手機號碼', '職稱', '服務機關單位', '備註');
+        $result[] = array('計畫名稱（專案名稱）', '活動', '姓名', '手機號碼', '職稱', '服務機關單位', '備註');
         foreach ($items AS $k => $v) {
             $result[] = array(
+                $plan['Plan']['name'],
                 $events[$v['Speaker']['Event_id']],
                 $v['Speaker']['name'],
                 $v['Speaker']['phone'],

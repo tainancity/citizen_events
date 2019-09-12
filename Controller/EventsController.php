@@ -111,9 +111,10 @@ class EventsController extends AppController {
             ),
         ));
         $result = array();
-        $result[] = array('活動（會議）名稱', '辦理形式', '活動期程（起）', '活動期程（訖）', '辦理地點', '公民參與人數', '備註');
+        $result[] = array('計畫名稱（專案名稱）', '活動（會議）名稱', '辦理形式', '活動期程（起）', '活動期程（訖）', '辦理地點', '公民參與人數', '備註');
         foreach($items AS $k => $v) {
             $result[] = array(
+                $plan['Plan']['name'],
                 $v['Event']['name'],
                 $v['Event']['event_type'],
                 $v['Event']['date_begin'],

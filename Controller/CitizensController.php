@@ -130,9 +130,10 @@ class CitizensController extends AppController {
             ),
         ));
         $result = array();
-        $result[] = array('活動', '擔任角色', '姓名', '手機號碼', '服務機關單位', '備註');
+        $result[] = array('計畫名稱（專案名稱）', '活動', '擔任角色', '姓名', '手機號碼', '服務機關單位', '備註');
         foreach ($items AS $k => $v) {
             $result[] = array(
+                $plan['Plan']['name'],
                 $events[$v['Citizen']['Event_id']],
                 $v['Citizen']['role'],
                 $v['Citizen']['name'],
