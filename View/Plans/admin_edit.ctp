@@ -1,3 +1,20 @@
+<?php
+
+$listOptions = array(
+    '參與式預算' => '參與式預算',
+    '審議式民調' => '審議式民調',
+    '聽證會' => '聽證會',
+    '公開展覽' => '公開展覽',
+    '公聽會' => '公聽會',
+    '世界咖啡館' => '世界咖啡館',
+    '說明會' => '說明會',
+    '座談會' => '座談會',
+    '公民論壇' => '公民論壇',
+    '公民陪審團' => '公民陪審團',
+    '(願景)工作坊' => '(願景)工作坊',
+    '其他' => '其他',
+);
+?>
 <div id="PlansAdminEdit">
     <?php echo $this->Form->create('Plan', array('type' => 'file')); ?>
     <div class="Plans form">
@@ -16,20 +33,7 @@
             ));
             echo $this->Form->input('Plan.plan_options', array(
                 'type' => 'select',
-                'options' => array(
-                    '參與式預算' => '參與式預算',
-                    '審議式民調' => '審議式民調',
-                    '聽證會' => '聽證會',
-                    '公開展覽' => '公開展覽',
-                    '公聽會' => '公聽會',
-                    '世界咖啡館' => '世界咖啡館',
-                    '說明會' => '說明會',
-                    '座談會' => '座談會',
-                    '公民論壇' => '公民論壇',
-                    '公民陪審團' => '公民陪審團',
-                    '(願景)工作坊' => '(願景)工作坊',
-                    '其他' => '其他',
-                ),
+                'options' => $listOptions,
                 'label' => '辦理形式',
                 'div' => 'form-group',
                 'class' => 'form-control',
@@ -66,24 +70,35 @@
     <?php echo $this->Form->end('送出'); ?>
 </div>
 <script>
-    $(function() {
+    $(function () {
         $('#PlanDateBegin').datepicker({
             dateFormat: 'yy-mm-dd'
         });
         $('#PlanDateEnd').datepicker({
             dateFormat: 'yy-mm-dd'
         });
-        $('#PlanPlanOptions').val($('#PlanPlanType').val());
-        $('#PlanPlanOptions').change(function() {
+        $('#PlanPlanOptions').change(function () {
             var selectedVal = $(this).val();
-            if(selectedVal != '其他') {
+            if (selectedVal != '其他') {
                 $('#PlanPlanType').val(selectedVal);
                 $('#PlanPlanType').hide();
             } else {
                 $('#PlanPlanType').val('');
                 $('#PlanPlanType').show();
             }
-            
-        }).trigger('change');
+
+        });
+<?php
+if(!empty($this->data['Plan']['plan_type']) && !isset($listOptions[$this->data['Plan']['plan_type']])) {
+?>
+        $('#PlanPlanOptions').val('其他');
+<?php
+} else {
+?>
+        $('#PlanPlanOptions').val($('#PlanPlanType').val());
+        $('#PlanPlanOptions').trigger('change');
+<?php
+}
+?>
     });
 </script>

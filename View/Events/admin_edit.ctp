@@ -1,3 +1,20 @@
+<?php
+
+$listOptions = array(
+    '參與式預算' => '參與式預算',
+    '審議式民調' => '審議式民調',
+    '聽證會' => '聽證會',
+    '公開展覽' => '公開展覽',
+    '公聽會' => '公聽會',
+    '世界咖啡館' => '世界咖啡館',
+    '說明會' => '說明會',
+    '座談會' => '座談會',
+    '公民論壇' => '公民論壇',
+    '公民陪審團' => '公民陪審團',
+    '(願景)工作坊' => '(願景)工作坊',
+    '其他' => '其他',
+);
+?>
 <div id="EventsAdminEdit">
     <?php echo $this->Form->create('Event', array('type' => 'file', 'url' => array('action' => 'edit', $id))); ?>
     <div class="Events form">        
@@ -84,6 +101,18 @@
                 $('#EventEventType').show();
             }
             
-        }).trigger('change');
+        });
+<?php
+if(!empty($this->data['Event']['event_type']) && !isset($listOptions[$this->data['Event']['event_type']])) {
+?>
+        $('#EventEventOptions').val('其他');
+<?php
+} else {
+?>
+        $('#EventEventOptions').val($('#EventEventType').val());
+        $('#EventEventOptions').trigger('change');
+<?php
+}
+?>
     });
 </script>
