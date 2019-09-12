@@ -24,9 +24,10 @@ if (!isset($url)) {
                 <th>辦理形式</th>
                 <th><?php echo $this->Paginator->sort('Plan.date_begin', '計畫期程（起）', array('url' => $url)); ?></th>
                 <th><?php echo $this->Paginator->sort('Plan.date_end', '計畫期程（迄）', array('url' => $url)); ?></th>
-                <th>活動場數</th>
                 <th>公民參與人數</th>
-                <th>工作人員培訓人數</th>
+                <th>活動</th>
+                <th>工作人員</th>
+                <th>講師</th>
                 <th>協辦單位</th>
                 <th>備註</th>
                 <th class="actions">操作</th>
@@ -57,6 +58,9 @@ if (!isset($url)) {
                     ?></td>
                 <td><?php
                     echo $item['Plan']['date_end'];
+                    ?></td>
+                <td><?php
+                    echo $item['Plan']['count_people'];
                     ?></td>
                 <td><?php
                     echo $this->Html->link($item['Plan']['count_events'], '/admin/events/index/' . $item['Plan']['id']);;

@@ -19,6 +19,8 @@ class PlansController extends AppController {
                     'Event.Plan_id' => $v['Plan']['id']
                 ),
             ));
+            $countPeople = $this->Plan->query('SELECT SUM(count_citizen) AS count_people FROM events WHERE Plan_id = ' . $v['Plan']['id']);
+            $items[$k]['Plan']['count_people'] = $countPeople[0][0]['count_people'];
             $items[$k]['Plan']['count_citizen'] = $this->Plan->Citizen->find('count', array(
                 'conditions' => array(
                     'Citizen.Plan_id' => $v['Plan']['id']
@@ -86,13 +88,15 @@ class PlansController extends AppController {
             ),
         ));
         $result = array();
-        $result[] = array('計畫名稱（專案名稱）', '計畫概述', '辦理形式', '計畫期程（起）', '計畫期程（迄）', '活動場數', '公民參與人數', '工作人員培訓人數', '協辦單位', '備註');
+        $result[] = array('計畫名稱（專案名稱）', '計畫概述', '辦理形式', '計畫期程（起）', '計畫期程（迄）', '活動場數', '公民參與人數', '工作人員培訓人數', '講師人數', '協辦單位', '備註');
         foreach($items AS $k => $v) {
             $v['Plan']['count_events'] = $this->Plan->Event->find('count', array(
                 'conditions' => array(
                     'Event.Plan_id' => $v['Plan']['id']
                 ),
             ));
+            $countPeople = $this->Plan->query('SELECT SUM(count_citizen) AS count_people FROM events WHERE Plan_id = ' . $v['Plan']['id']);
+            $v['Plan']['count_people'] = $countPeople[0][0]['count_people'];
             $v['Plan']['count_citizen'] = $this->Plan->Citizen->find('count', array(
                 'conditions' => array(
                     'Citizen.Plan_id' => $v['Plan']['id']
@@ -110,6 +114,7 @@ class PlansController extends AppController {
                 $v['Plan']['date_begin'],
                 $v['Plan']['date_end'],
                 $v['Plan']['count_events'],
+                $v['Plan']['count_people'],
                 $v['Plan']['count_citizen'],
                 $v['Plan']['count_speaker'],
                 $v['Plan']['units'],
