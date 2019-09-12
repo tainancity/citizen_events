@@ -3,7 +3,7 @@
     echo $this->Form->create('Citizen', array('type' => 'file', 'url' => array('action' => 'add', $plan['Plan']['id'])));
     ?>
     <div class="Citizens form">
-        <h2>新增<?php echo $plan['Plan']['name']; ?>的公民</h2>
+        <h2>新增<?php echo $plan['Plan']['name']; ?>的工作人員</h2>
             <?php
             echo $this->Form->input('Citizen.Event_id', array(
                 'type' => 'select',

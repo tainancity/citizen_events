@@ -1,7 +1,7 @@
 <div id="SpeakersAdminEdit">
     <?php echo $this->Form->create('Speaker', array('type' => 'file')); ?>
     <div class="Speakers form">
-            <h2>編輯工作人員</h2>
+            <h2>編輯講師</h2>
             <?php
             echo $this->Form->input('Speaker.id');
             echo $this->Form->input('Speaker.Event_id', array(

@@ -1,7 +1,7 @@
 <div id="CitizensAdminEdit">
     <?php echo $this->Form->create('Citizen', array('type' => 'file')); ?>
     <div class="Citizens form">
-            <h2>編輯公民</h2>
+            <h2>編輯工作人員</h2>
             <?php
             echo $this->Form->input('Citizen.id');
             echo $this->Form->input('Citizen.Event_id', array(
