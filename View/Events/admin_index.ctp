@@ -12,8 +12,8 @@ if (!isset($url)) {
         <?php echo $this->Html->link('匯出', array('action' => 'export', $plan['Plan']['id']), array('class' => 'btn btn-default')); ?>
     </div>
     <div class="btn-group pull-right">
-        <?php echo $this->Html->link('相關公民', '/admin/citizens/index/' . $plan['Plan']['id'], array('class' => 'btn btn-default')); ?>
-        <?php echo $this->Html->link('相關工作人員', '/admin/speakers/index/' . $plan['Plan']['id'], array('class' => 'btn btn-default')); ?>
+        <?php echo $this->Html->link('相關工作人員', '/admin/citizens/index/' . $plan['Plan']['id'], array('class' => 'btn btn-default')); ?>
+        <?php echo $this->Html->link('相關講師', '/admin/speakers/index/' . $plan['Plan']['id'], array('class' => 'btn btn-default')); ?>
     </div>
     <div><?php
         echo $this->Paginator->counter(array(
