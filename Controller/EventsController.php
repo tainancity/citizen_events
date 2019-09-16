@@ -52,6 +52,10 @@ class EventsController extends AppController {
             } else {
                 $this->Session->setFlash('資料儲存時發生錯誤');
             }
+        } else {
+            $this->data = array('Event' => array(
+                'count_citizen' => 0,
+            ));
         }
     }
 
