@@ -111,7 +111,7 @@ class CitizensController extends AppController {
         $organizations = Configure::read('organizations');
         $this->layout = 'ajax';
         $this->response->disableCache();
-        $this->response->download($plan['Plan']['name'] . '_公民.csv');
+        $this->response->download($plan['Plan']['name'] . '_工作人員.csv');
         $headers = $this->response->header('Content-Type', 'application/csv');
         foreach ($headers AS $name => $value) {
             header("{$name}: {$value}");
