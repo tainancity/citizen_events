@@ -3,6 +3,13 @@
     <fieldset>
         <legend><?php echo __('New Member', true); ?></legend>
         <?php
+        echo $this->Form->input('Member.name', array(
+                'type' => 'select',
+                'options' => $organizations,
+                'label' => '單位',
+                'div' => 'form-group',
+                'class' => 'form-control',
+            ));
         echo $this->Form->input('Member.username', array(
             'type' => 'text',
             'label' => '帳號',

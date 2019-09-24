@@ -12,7 +12,7 @@ class MembersController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         if (isset($this->Auth)) {
-            $this->Auth->allow('login', 'logout', 'setup');
+            $this->Auth->allow('login', 'logout', 'setup', 'signup');
         }
     }
 
@@ -71,6 +71,23 @@ class MembersController extends AppController {
         }
     }
 
+    public function signup() {
+        $organizations = Configure::read('organizations');
+        if (!empty($this->request->data)) {
+            $dataToSave = $this->request->data;
+            $this->request->data['Member']['group_id'] = 2;
+            $this->request->data['Member']['user_status'] = 'Y';
+            $this->Member->create();
+            if ($this->Member->save($this->request->data)) {
+                $this->Session->setFlash('帳號已經建立');
+                $this->redirect('/members/login');
+            } else {
+                $this->Session->setFlash('帳號建立失敗');
+            }
+        }
+        $this->set('organizations', $organizations);
+    }
+
     public function admin_index() {
         $scope = array();
         $keyword = '';
@@ -99,14 +116,8 @@ class MembersController extends AppController {
         );
         $this->set('members', $this->paginate($this->Member, $scope));
         $this->set('keyword', $keyword);
-    }
-
-    public function admin_view($id = null) {
-        if (!$id) {
-            $this->Session->setFlash('請依照網頁指示操作');
-            $this->redirect(array('action' => 'index'));
-        }
-        $this->set('member', $this->Member->read(null, $id));
+        $organizations = Configure::read('organizations');
+        $this->set('organizations', $organizations);
     }
 
     public function admin_add() {
@@ -120,6 +131,8 @@ class MembersController extends AppController {
                 $this->Session->setFlash('資料儲存時發生錯誤');
             }
         }
+        $organizations = Configure::read('organizations');
+        $this->set('organizations', $organizations);
         $this->set('groups', $this->Member->Group->find('list'));
     }
 
@@ -147,6 +160,8 @@ class MembersController extends AppController {
         if (empty($this->request->data)) {
             $this->request->data = $this->Member->read(null, $id);
         }
+        $organizations = Configure::read('organizations');
+        $this->set('organizations', $organizations);
         $this->set('groups', $this->Member->Group->find('list'));
     }
 
@@ -204,6 +219,26 @@ class MembersController extends AppController {
                 }
             }
         }
+        $this->set('accounts', $accounts);
+    }
+    
+    public function admin_list() {
+        $members = $this->Member->find('all', array(
+            'conditions' => array(
+                'Member.group_id' => 2,
+            ),
+        ));
+        $organizations = Configure::read('organizations');
+        $accounts = array();
+        foreach($members AS $member) {
+            if(!empty($member['Member']['name'])) {
+                if(!isset($accounts[$member['Member']['name']])) {
+                    $accounts[$member['Member']['name']] = array();
+                }
+                $accounts[$member['Member']['name']][] = $member;
+            }
+        }
+        $this->set('organizations', $organizations);
         $this->set('accounts', $accounts);
     }
 

@@ -32,9 +32,10 @@
                             echo $this->Html->link('Members', '/admin/members', array('class' => 'btn btn-default'));
                             echo $this->Html->link('Groups', '/admin/groups', array('class' => 'btn btn-default'));
                         }
-                        echo $this->Html->link('Logout', '/members/logout', array('class' => 'btn btn-default'));
+                        echo $this->Html->link('登出', '/members/logout', array('class' => 'btn btn-default'));
                     } else {
-                        echo $this->Html->link('Login', '/members/login', array('class' => 'btn btn-default'));
+                        echo $this->Html->link('登入', '/members/login', array('class' => 'btn btn-default'));
+                        echo $this->Html->link('註冊', '/members/signup', array('class' => 'btn btn-default'));
                     }
                     ?>
                     <?php

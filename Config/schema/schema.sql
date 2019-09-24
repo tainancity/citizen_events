@@ -162,6 +162,7 @@ DROP TABLE IF EXISTS `members`;
 CREATE TABLE `members` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) DEFAULT NULL,
+  `name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `username` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(48) COLLATE utf8_unicode_ci DEFAULT NULL,
   `user_status` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -226,4 +227,4 @@ CREATE TABLE `speakers` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-16 15:10:36
+-- Dump completed on 2019-09-24 10:58:30
