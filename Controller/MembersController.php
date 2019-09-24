@@ -231,11 +231,11 @@ class MembersController extends AppController {
         $organizations = Configure::read('organizations');
         $accounts = array();
         foreach($members AS $member) {
-            if(!empty($member['Member']['name'])) {
-                if(!isset($accounts[$member['Member']['name']])) {
-                    $accounts[$member['Member']['name']] = array();
+            if(!empty($member['Member']['organization'])) {
+                if(!isset($accounts[$member['Member']['organization']])) {
+                    $accounts[$member['Member']['organization']] = array();
                 }
-                $accounts[$member['Member']['name']][] = $member;
+                $accounts[$member['Member']['organization']][] = $member;
             }
         }
         $this->set('organizations', $organizations);

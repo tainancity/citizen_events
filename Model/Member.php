@@ -19,7 +19,7 @@ class Member extends AppModel {
         if (empty($this->data)) {
             $data = $this->read();
         }
-        if (!$data['Member']['group_id']) {
+        if (empty($data['Member']['group_id'])) {
             return null;
         } else {
             return array('Group' => array('id' => $data['Member']['group_id']));

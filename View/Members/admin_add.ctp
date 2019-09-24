@@ -3,32 +3,50 @@
     <fieldset>
         <legend><?php echo __('New Member', true); ?></legend>
         <?php
-        echo $this->Form->input('Member.name', array(
+        echo $this->Form->input('Member.organization', array(
                 'type' => 'select',
                 'options' => $organizations,
-                'label' => '單位',
+                'label' => '機關單位名稱',
                 'div' => 'form-group',
                 'class' => 'form-control',
             ));
-        echo $this->Form->input('Member.username', array(
-            'type' => 'text',
-            'label' => '帳號',
-            'div' => 'form-group',
-            'class' => 'form-control',
-        ));
+            echo $this->Form->input('Member.name', array(
+                'label' => '姓名',
+                'div' => 'form-group',
+                'class' => 'form-control',
+            ));
+            echo $this->Form->input('Member.title', array(
+                'label' => '職稱',
+                'div' => 'form-group',
+                'class' => 'form-control',
+            ));
+            echo $this->Form->input('Member.phone', array(
+                'label' => '連絡電話',
+                'div' => 'form-group',
+                'class' => 'form-control',
+            ));
+            echo $this->Form->input('Member.email', array(
+                'label' => '電子郵件',
+                'div' => 'form-group',
+                'class' => 'form-control',
+            ));
         echo $this->Form->input('Member.group_id', array(
             'type' => 'select',
             'label' => '群組',
             'div' => 'form-group',
             'class' => 'form-control',
         ));
-        echo $this->Form->input('Member.password', array(
-            'type' => 'password',
-            'label' => '密碼',
-            'value' => '',
-            'div' => 'form-group',
-            'class' => 'form-control',
-        ));
+            echo $this->Form->input('Member.username', array(
+                'label' => '帳號',
+                'div' => 'form-group',
+                'class' => 'form-control',
+            ));
+            echo $this->Form->input('Member.password', array(
+                'type' => 'password',
+                'label' => '密碼',
+                'div' => 'form-group',
+                'class' => 'form-control',
+            ));
         echo $this->Form->input('Member.user_status', array(
             'type' => 'radio',
             'label' => '狀態',

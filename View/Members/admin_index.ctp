@@ -15,7 +15,11 @@
     <div class="paging"><?php echo $this->element('paginator'); ?></div>
     <table class="table table-bordered" id="MembersAdminIndexTable">
         <tr>
-            <th>單位</th>
+            <th>機關單位名稱</th>
+            <th>姓名</th>
+            <th>職稱</th>
+            <th>連絡電話</th>
+            <th>電子郵件</th>
             <th><?php echo $this->Paginator->sort('username', '帳號'); ?></th>
             <th><?php echo $this->Paginator->sort('user_status', '狀態'); ?></th>
             <th><?php echo $this->Paginator->sort('created', '建立時間'); ?></th>
@@ -32,7 +36,19 @@
             ?>
         <tr<?php echo $class; ?>>
             <td>
-                    <?php echo isset($organizations[$member['Member']['name']]) ? $organizations[$member['Member']['name']] : '--'; ?>
+                    <?php echo isset($organizations[$member['Member']['organization']]) ? $organizations[$member['Member']['organization']] : '--'; ?>
+            </td>
+            <td>
+                    <?php echo $member['Member']['name']; ?>
+            </td>
+            <td>
+                    <?php echo $member['Member']['title']; ?>
+            </td>
+            <td>
+                    <?php echo $member['Member']['phone']; ?>
+            </td>
+            <td>
+                    <?php echo $member['Member']['email']; ?>
             </td>
             <td>
                     <?php echo $member['Member']['username']; ?>
