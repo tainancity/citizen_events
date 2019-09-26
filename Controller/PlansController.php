@@ -9,8 +9,10 @@ class PlansController extends AppController {
     public $helpers = array();
 
     function admin_index() {
+        $organizations = Configure::read('organizations');
         $this->paginate['Plan'] = array(
             'limit' => 20,
+            'contain' => array('Member'),
         );
         $items = $this->paginate($this->Plan);
         foreach($items AS $k => $v) {
@@ -32,6 +34,7 @@ class PlansController extends AppController {
                 ),
             ));
         }
+        $this->set('organizations', $organizations);
         $this->set('items', $items);
     }
 
@@ -114,7 +117,7 @@ class PlansController extends AppController {
                 ),
             ));
             $result[] = array(
-                isset($organizations[$v['Member']['username']]) ? $organizations[$v['Member']['username']] : '--',
+                isset($organizations[$v['Member']['organization']]) ? $organizations[$v['Member']['organization']] : '--',
                 $v['Plan']['name'],
                 $v['Plan']['description'],
                 $v['Plan']['plan_type'],

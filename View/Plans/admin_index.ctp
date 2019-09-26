@@ -19,6 +19,7 @@ if (!isset($url)) {
     <table class="table table-bordered" id="PlansAdminIndexTable">
         <thead>
             <tr>
+                <th>填報單位</th>
                 <th>計畫名稱（專案名稱）</th>
                 <th>計畫概述</th>
                 <th>辦理形式</th>
@@ -43,7 +44,9 @@ if (!isset($url)) {
                 }
                 ?>
             <tr<?php echo $class; ?>>
-
+                <td><?php
+                echo isset($organizations[$item['Member']['organization']]) ? $organizations[$item['Member']['organization']] : '--';
+                ?></td>
                 <td><?php
                     echo $item['Plan']['name'];
                     ?></td>
