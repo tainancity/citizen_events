@@ -92,7 +92,7 @@ class PlansController extends AppController {
             ),
             'contain' => array(
                 'Member' => array(
-                    'fields' => array('username'),
+                    'fields' => array('organization'),
                 ),
             ),
         ));
